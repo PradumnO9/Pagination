@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { FaCaretLeft } from "react-icons/fa6";
 import Card from "./Card";
 import "./Card.css";
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 9;
 
 const CardList = () => {
   const [products, setProducts] = useState([]);
@@ -20,6 +21,8 @@ const CardList = () => {
 
   const totalProducts = products.length;
   const noOfPages = Math.ceil(totalProducts / PAGE_SIZE);
+  const start = currentPage * PAGE_SIZE;
+  const end = start + PAGE_SIZE;
 
   return (
     <div>
@@ -28,11 +31,23 @@ const CardList = () => {
       ) : (
         <div style={{ textAlign: "center" }}>
           <h1>Pagination</h1>
-          <div>{[...Array(noOfPages).keys()].map(n => {
-            return(<button className="page-number" key={n}>{n}</button>)
-          })}</div>
+          <div>
+            {[...Array(noOfPages).keys()].map((n) => {
+              return (
+                <button
+                  className="page-number"
+                  onClick={() => {
+                    setCurrentPage(n);
+                  }}
+                  key={n}
+                >
+                  {n}
+                </button>
+              );
+            })}
+          </div>
           <div className="products-container">
-            {products.slice(0, 9).map((product) => {
+            {products.slice(start, end).map((product) => {
               return <Card key={product.id} product={product} />;
             })}
           </div>
