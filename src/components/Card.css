@@ -23,8 +23,22 @@
     border-bottom: 1px solid black;
 }
 
+.button-outer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrow-button {
+    cursor: pointer;
+}
+
 .page-number {
     padding: 7px;
     margin: 2px;
     cursor: pointer;
+}
+
+.current-index {
+    background-color: rgb(128, 128, 128);
 }

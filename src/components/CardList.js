@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { FaCaretLeft } from "react-icons/fa6";
+import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronRight } from "react-icons/fa";
 import Card from "./Card";
 import "./Card.css";
 
@@ -24,6 +25,18 @@ const CardList = () => {
   const start = currentPage * PAGE_SIZE;
   const end = start + PAGE_SIZE;
 
+  const handleLeftArrowClick = () => {
+    currentPage === 0
+      ? setCurrentPage(noOfPages - 1)
+      : setCurrentPage((prevValue) => prevValue - 1);
+  };
+
+  const handleRightArrowClick = () => {
+    currentPage === noOfPages - 1
+      ? setCurrentPage(0)
+      : setCurrentPage((prevValue) => prevValue + 1);
+  };
+
   return (
     <div>
       {!products ? (
@@ -31,11 +44,18 @@ const CardList = () => {
       ) : (
         <div style={{ textAlign: "center" }}>
           <h1>Pagination</h1>
-          <div>
+          <div className="button-outer-container">
+            <FaChevronLeft
+              className="arrow-button"
+              onClick={handleLeftArrowClick}
+              size={25}
+            />
             {[...Array(noOfPages).keys()].map((n) => {
               return (
                 <button
-                  className="page-number"
+                  className={
+                    "page-number " + (currentPage === n ? "current-index" : "")
+                  }
                   onClick={() => {
                     setCurrentPage(n);
                   }}
@@ -45,6 +65,11 @@ const CardList = () => {
                 </button>
               );
             })}
+            <FaChevronRight
+              className="arrow-button"
+              onClick={handleRightArrowClick}
+              size={25}
+            />
           </div>
           <div className="products-container">
             {products.slice(start, end).map((product) => {
